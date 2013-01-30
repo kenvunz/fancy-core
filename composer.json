@@ -1,5 +1,5 @@
 {
-    "name": "gladeye/la-press",
+    "name": "fancy/core",
     "description": "",
     "authors": [
         {
@@ -16,7 +16,7 @@
             "src/migrations"
         ],
         "psr-0": {
-            "Gladeye\\LaPress": "src/"
+            "Fancy\\Core": "src/"
         }
     },
     "minimum-stability": "dev"

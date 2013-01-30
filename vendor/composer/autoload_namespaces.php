@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Illuminate\\Support' => $vendorDir . '/illuminate/support/',
-    'Gladeye\\LaPress' => $baseDir . '/src/',
+    'Fancy\\Core' => $baseDir . '/src/',
 );

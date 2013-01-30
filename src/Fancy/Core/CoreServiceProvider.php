@@ -1,9 +1,9 @@
-<?php namespace Gladeye\LaPress;
+<?php namespace Gladeye\Core;
 
-use Gladeye\LaPress\Support\Factory;
+use Fancy\Core\Support\Factory;
 use Illuminate\Support\ServiceProvider;
 
-class LaPressServiceProvider extends ServiceProvider {
+class CoreServiceProvider extends ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -19,7 +19,7 @@ class LaPressServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('gladeye/la-press');
+		$this->package('fancy\core');
 
         include __DIR__.'/../../routes.php';
 	}
@@ -31,11 +31,11 @@ class LaPressServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['la-press'] = $this->app->share(function($app) {
+		$this->app['fancy'] = $this->app->share(function($app) {
             return new Factory($app);
         });
 
-        $this->app['la-press.wordpress'] = $this->app->share(function($app) {
+        $this->app['fancy.wordpress'] = $this->app->share(function($app) {
             return new Wordpress;
         });
 	}

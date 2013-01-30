@@ -1,4 +1,4 @@
-<?php namespace Gladeye\LaPress\Support;
+<?php namespace Fancy\Core\Support;
 
 use Illuminate\Foundation\Application;
 
@@ -6,7 +6,7 @@ class Factory
 {
     protected $app;
 
-    protected $namespace = 'la-press';
+    protected $namespace = 'fancy';
 
     public function __construct($app)
     {

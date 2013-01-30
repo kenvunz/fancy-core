@@ -1,4 +1,4 @@
-<?php namespace Gladeye\LaPress\Support;
+<?php namespace Fancy\Core\Support;
 
 /**
  * Simple wrapper class for calling all wordpress functions, making it easy for unit testing

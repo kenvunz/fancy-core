@@ -1,7 +1,7 @@
 <?php
 
-use Gladeye\LaPress\Support\Wordpress;
-use Gladeye\LaPress\Facade\LaPress;
+use Fancy\Core\Support\Wordpress;
+use Fancy\Core\Facade\Core;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {

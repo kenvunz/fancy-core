@@ -1,14 +1,14 @@
 <?php
 
-use Gladeye\LaPress\Support\Factory;
-use Gladeye\LaPress\Facade\LaPress;
+use Fancy\Core\Support\Factory;
+use Fancy\Core\Facade\Core;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testFactoryMagicMethodCall()
     {
-        $app['la-press.view'] = 'view';
+        $app['fancy.view'] = 'view';
 
         $factory = new Factory($app);
 
@@ -17,7 +17,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testFactoryMagicMethodCallWithException()
     {
-        $app['la-press.view'] = 'view';
+        $app['fancy.view'] = 'view';
 
         $factory = new Factory($app);
 
@@ -32,10 +32,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testFactoryMagicMethodCallViaFacade()
     {
-        $app['la-press'] = new Factory(array('la-press.view' => 'view'));
+        $app['fancy'] = new Factory(array('fancy.view' => 'view'));
 
-        LaPress::setFacadeApplication($app);
+        Core::setFacadeApplication($app);
 
-        $this->assertEquals(LaPress::view(), 'view');
+        $this->assertEquals(Core::view(), 'view');
     }
 }
