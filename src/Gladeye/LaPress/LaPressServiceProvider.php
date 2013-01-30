@@ -1,5 +1,6 @@
 <?php namespace Gladeye\LaPress;
 
+use Gladeye\LaPress\Support\Factory;
 use Illuminate\Support\ServiceProvider;
 
 class LaPressServiceProvider extends ServiceProvider {
@@ -30,7 +31,9 @@ class LaPressServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app['la-press'] = $this->app->share(function($app) {
+            return new Factory($app);
+        });
 	}
 
 	/**
