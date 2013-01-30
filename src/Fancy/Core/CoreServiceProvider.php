@@ -1,4 +1,4 @@
-<?php namespace Gladeye\Core;
+<?php namespace Fancy\Core;
 
 use Fancy\Core\Support\Factory;
 use Illuminate\Support\ServiceProvider;
