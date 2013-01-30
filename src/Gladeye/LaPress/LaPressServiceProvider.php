@@ -34,6 +34,10 @@ class LaPressServiceProvider extends ServiceProvider {
 		$this->app['la-press'] = $this->app->share(function($app) {
             return new Factory($app);
         });
+
+        $this->app['la-press.wordpress'] = $this->app->share(function($app) {
+            return new Wordpress;
+        });
 	}
 
 	/**
