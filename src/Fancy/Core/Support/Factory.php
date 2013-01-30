@@ -1,7 +1,5 @@
 <?php namespace Fancy\Core\Support;
 
-use Illuminate\Foundation\Application;
-
 class Factory
 {
     protected $app;
