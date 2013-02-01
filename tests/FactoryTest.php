@@ -3,7 +3,7 @@
 use Fancy\Core\Support\Factory;
 use Fancy\Core\Facade\Core;
 
-class FactoryTest extends \PHPUnit_Framework_TestCase
+class FactoryTest extends \TestCase
 {
 
     public function testFactoryMagicMethodCall()

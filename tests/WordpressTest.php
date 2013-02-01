@@ -3,8 +3,13 @@
 use Fancy\Core\Support\Wordpress;
 use Fancy\Core\Facade\Core;
 
-class FactoryTest extends \PHPUnit_Framework_TestCase
+class WordpressTest extends \TestCase
 {
+
+    public function testInstantiationViaFacade()
+    {
+        $this->assertTrue(Core::wordpress() instanceof Wordpress);
+    }
 
 	public function testFactoryMagicMethodCallWithException()
 	{
