@@ -11,14 +11,14 @@ class ViewFileTest extends \TestCase
         $this->assertTrue(Core::view() instanceof ViewFile);
     }
 
-    public function testSetContext()
+    public function testSetDirectory()
     {
         $view = Core::view();
 
-        $view->setContext('template');
+        $view->setDirectory('template');
 
         $reflectedClass = new ReflectionClass($view);
-        $property = $reflectedClass->getProperty('context');
+        $property = $reflectedClass->getProperty('directory');
         $property->setAccessible(true);
 
         $this->assertEquals($property->getValue($view), 'template');
@@ -39,6 +39,6 @@ class ViewFileTest extends \TestCase
 
         $expected = "$namespace::baz.foo";
 
-        $this->assertEquals(Core::view()->setContext('baz')->get('foo'), $expected);
+        $this->assertEquals(Core::view()->setDirectory('baz')->get('foo'), $expected);
     }
 }

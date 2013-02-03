@@ -1,14 +1,28 @@
 <?php namespace Fancy\Core\Support;
 
+use Fancy\Core\Support\Wordpress;
+use Illuminate\View\ViewFinderInterface;
+
 class ViewFile
 {
-    protected $context;
+    protected $directory;
 
     protected $namespace = FANCY_NAME;
 
-    public function setContext($context)
+    protected $wp;
+
+    protected $finder;
+
+    public function __construct(Wordpress $wp, ViewFinderInterface $finder)
     {
-        $this->context = $context;
+        $this->wp = $wp;
+
+        $this->finder = $finder;
+    }
+
+    public function setDirectory($name)
+    {
+        $this->directory = $name;
 
         return $this;
     }
@@ -22,8 +36,8 @@ class ViewFile
     {
         $view = "{$this->namespace}::$name";
 
-        if(!is_null($this->context)) {
-            $view = "{$this->namespace}::{$this->context}.$name";
+        if(!is_null($this->directory)) {
+            $view = "{$this->namespace}::{$this->directory}.$name";
         }
 
         return $view;

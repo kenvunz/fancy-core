@@ -46,16 +46,19 @@ class CoreServiceProvider extends ServiceProvider {
             return new Wordpress;
         });
 
-        $this->app["$namespace.view-file"] = $this->app->share(function($app) {
-            return new ViewFile;
+        $this->app["$namespace.view-file"] = $this->app->share(function($app) use ($namespace) {
+            $wordpress = $app["$namespace.wordpress"];
+            $finder = $app['view.finder'];
+
+            return new ViewFile($wordpress, $finder);
         });
 
         $this->app["$namespace.view"] = $this->app->share(function($app) use ($namespace) {
-            return $app["$namespace.view-file"]->setContext(null);
+            return $app["$namespace.view-file"]->setDirectory(null);
         });
 
         $this->app["$namespace.layout"] = $this->app->share(function($app) use ($namespace) {
-            return $app["$namespace.view-file"]->setContext('layouts');
+            return $app["$namespace.view-file"]->setDirectory('layouts');
         });
 	}
 
