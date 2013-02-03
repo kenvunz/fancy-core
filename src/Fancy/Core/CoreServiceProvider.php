@@ -2,8 +2,11 @@
 
 use Fancy\Core\Support\Factory;
 use Fancy\Core\Support\Wordpress;
-use Fancy\Core\View\Environment;
+use Fancy\Core\Support\ViewFile;
 use Illuminate\Support\ServiceProvider;
+
+define ('FANCY_PACKAGE', 'fancy/core');
+define ('FANCY_NAME', 'fancy');
 
 class CoreServiceProvider extends ServiceProvider {
 
@@ -21,7 +24,7 @@ class CoreServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('fancy/core', 'fancy');
+		$this->package(FANCY_PACKAGE, FANCY_NAME);
 
         include __DIR__.'/../../routes.php';
 	}
@@ -33,33 +36,26 @@ class CoreServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['fancy'] = $this->app->share(function($app) {
+        $namespace = FANCY_NAME;
+
+		$this->app[$namespace] = $this->app->share(function($app) {
             return new Factory($app);
         });
 
-        $this->app['fancy.wordpress'] = $this->app->share(function($app) {
+        $this->app["$namespace.wordpress"] = $this->app->share(function($app) {
             return new Wordpress;
         });
 
-        $this->app['fancy.view'] = $this->app['view'] = $this->app->share(function($app)
-        {
-            // Next we need to grab the engine resolver instance that will be used by the
-            // environment. The resolver will be used by an environment to get each of
-            // the various engine implementations such as plain PHP or Blade engine.
-            $resolver = $app['view.engine.resolver'];
+        $this->app["$namespace.view-file"] = $this->app->share(function($app) {
+            return new ViewFile;
+        });
 
-            $finder = $app['view.finder'];
+        $this->app["$namespace.view"] = $this->app->share(function($app) use ($namespace) {
+            return $app["$namespace.view-file"]->setContext(null);
+        });
 
-            $env = new Environment($resolver, $finder, $app['events']);
-
-            // We will also set the container instance on this view environment since the
-            // view composers may be classes registered in the container, which allows
-            // for great testable, flexible composers for the application developer.
-            $env->setContainer($app);
-
-            $env->share('app', $app);
-
-            return $env;
+        $this->app["$namespace.layout"] = $this->app->share(function($app) use ($namespace) {
+            return $app["$namespace.view-file"]->setContext('layouts');
         });
 	}
 

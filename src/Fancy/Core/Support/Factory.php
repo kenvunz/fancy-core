@@ -4,7 +4,7 @@ class Factory
 {
     protected $app;
 
-    protected $namespace = 'fancy';
+    protected $namespace = FANCY_NAME;
 
     public function __construct($app)
     {

@@ -1,0 +1,1 @@
+@include(Fancy\Core\Facade\Core::view()->intuit())
