@@ -34,7 +34,7 @@ class ViewFile
 
     public function get($name)
     {
-        $name = $this->getViewFile($name);
+        $name = $this->getPossibleViewFile($name);
 
         $nameWithNameSpace = "{$this->namespace}::$name";
 
@@ -50,14 +50,13 @@ class ViewFile
     public function exists($name)
     {
         try {
-            $existed = is_string($this->finder->find($name));
-            return $existed;
+            return is_string($this->finder->find($name));
         } catch (\InvalidArgumentException $e) {
             return false;
         }
     }
 
-    protected function getViewFile($name)
+    protected function getPossibleViewFile($name)
     {
         $view = $name;
 

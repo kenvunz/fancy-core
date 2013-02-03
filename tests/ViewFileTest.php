@@ -13,7 +13,6 @@ class ViewFileTest extends \TestCase
         $this->app->boot();
     }
 
-
     public function testInstantiationViaFacade()
     {
         $this->assertTrue(Core::view() instanceof ViewFile);
