@@ -34,10 +34,35 @@ class ViewFile
 
     public function get($name)
     {
-        $view = "{$this->namespace}::$name";
+        $name = $this->getViewFile($name);
+
+        $nameWithNameSpace = "{$this->namespace}::$name";
+
+        if($this->exists($name)) {
+            return $name;
+        } else if($this->exists($nameWithNameSpace)) {
+            return $nameWithNameSpace;
+        } else {
+            throw new \InvalidArgumentException("View [$name] not found.");
+        }
+    }
+
+    public function exists($name)
+    {
+        try {
+            $existed = is_string($this->finder->find($name));
+            return $existed;
+        } catch (\InvalidArgumentException $e) {
+            return false;
+        }
+    }
+
+    protected function getViewFile($name)
+    {
+        $view = $name;
 
         if(!is_null($this->directory)) {
-            $view = "{$this->namespace}::{$this->directory}.$name";
+            $view = "{$this->directory}.$name";
         }
 
         return $view;
