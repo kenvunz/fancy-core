@@ -111,7 +111,7 @@ class ViewFile
 
     /**
      * Check if a view name is exists using the ViewFileFinder instance
-     * @param  string $name
+     * @param  string|ViewName $name
      * @return boolean
      */
     public function exists($name)

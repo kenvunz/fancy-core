@@ -3,6 +3,7 @@
 use Fancy\Core\Facade\Core;
 use Fancy\Core\Support\ViewFile;
 use Fancy\Core\Support\Wordpress;
+use Fancy\Core\Entity\ViewName;
 
 class ViewFileTest extends \TestCase
 {
@@ -61,7 +62,7 @@ class ViewFileTest extends \TestCase
 
         $viewFile = new ViewFile($wordpress, $finder);
 
-        $this->assertTrue($viewFile->exists('foo'));
+        $this->assertTrue($viewFile->exists(new ViewName('foo')));
     }
 
     public function testExistsFalse()
@@ -76,7 +77,7 @@ class ViewFileTest extends \TestCase
 
         $viewFile = new ViewFile($wordpress, $finder);
 
-        $this->assertFalse($viewFile->exists('foo'));
+        $this->assertFalse($viewFile->exists(new ViewName('foo')));
     }
 
     public function testIntuitByContext()
