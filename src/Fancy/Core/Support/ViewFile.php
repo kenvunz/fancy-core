@@ -46,7 +46,13 @@ class ViewFile
             }
         }
 
-        return $name;
+        // if name is still the default, we'll perform a final find
+        // so it actually end up in the package default folder
+        if($name === 'default') {
+            $found = $this->find($name);
+        }
+
+        return $found;
     }
 
     /**

@@ -1,6 +1,10 @@
 <?php
 
-use Fancy\Core\Facade\Core;
+// suggested setup
+
+Route::get('/', function() {
+    return View::make('fancy::auto');
+});
 
 Route::get('{name}', function($name) {
     return View::make('fancy::auto');

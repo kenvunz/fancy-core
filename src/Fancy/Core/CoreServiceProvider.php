@@ -25,8 +25,6 @@ class CoreServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package(FANCY_PACKAGE, FANCY_NAME);
-
-        include __DIR__.'/../../routes.php';
 	}
 
 	/**
