@@ -32,4 +32,10 @@ class Wordpress
             throw new \RuntimeException("Wordpress cannot find function name '$method'");
         }
     }
+
+    public function post()
+    {
+        global $post;
+        return $post;
+    }
 }
