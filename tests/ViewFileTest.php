@@ -53,7 +53,7 @@ class ViewFileTest extends \TestCase
     {
         $wordpress = new Wordpress;
 
-        $finder = $this->getMock('Illuminate\View\FileViewFinder', array('find'), array(), 'FileViewFinderMock', false);
+        $finder = $this->getMock('Illuminate\View\FileViewFinder', array('find'), array(), 'FileViewFinder_' . uniqid(), false);
 
         $finder->expects($this->once())
             ->method('find')
@@ -68,7 +68,7 @@ class ViewFileTest extends \TestCase
     {
         $wordpress = new Wordpress;
 
-        $finder = $this->getMock('Illuminate\View\FileViewFinder', array('find'), array(), 'FileViewFinderMock2', false);
+        $finder = $this->getMock('Illuminate\View\FileViewFinder', array('find'), array(), 'FileViewFinder_' . uniqid(), false);
 
         $finder->expects($this->once())
             ->method('find')
@@ -77,5 +77,54 @@ class ViewFileTest extends \TestCase
         $viewFile = new ViewFile($wordpress, $finder);
 
         $this->assertFalse($viewFile->exists('foo'));
+    }
+
+    public function testIntuitByContext()
+    {
+        $finder = $this->getMock('Illuminate\View\FileViewFinder', array('find'), array(), 'FileViewFinder_' . uniqid(), false);
+
+        $finder->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo('home'))
+            ->will($this->returnValue('home'));
+
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('is_front_page', 'is_home'), array(), 'WordpressMock_' . uniqid(), false);
+
+        $wordpress->expects($this->once())
+            ->method('is_front_page')
+            ->will($this->returnValue(false));
+
+        $wordpress->expects($this->once())
+            ->method('is_home')
+            ->will($this->returnValue(true));
+
+        $viewFile = new ViewFile($wordpress, $finder);
+
+        $this->assertEquals($viewFile->intuitByContext(), 'home');
+    }
+
+    public function testIntuitByMeta()
+    {
+        $finder = $this->getMock('Illuminate\View\FileViewFinder', array('find'), array(), 'FileViewFinder_' . uniqid(), false);
+
+        $finder->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo('meta-page-home'))
+            ->will($this->returnValue('home'));
+
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('post', 'get_post_meta'), array(), 'WordpressMock_' . uniqid(), false);
+
+        $wordpress->expects($this->once())
+            ->method('post')
+            ->will($this->returnValue((object) array('ID' => 1)));
+
+        $wordpress->expects($this->once())
+            ->method('get_post_meta')
+            ->with($this->equalTo(1), $this->equalTo('page'), $this->equalTo(true))
+            ->will($this->returnValue('home'));
+
+        $viewFile = new ViewFile($wordpress, $finder);
+
+        $this->assertEquals($viewFile->intuitByMeta(), 'meta-page-home');
     }
 }

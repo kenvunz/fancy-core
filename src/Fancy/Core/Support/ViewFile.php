@@ -29,22 +29,74 @@ class ViewFile
 
     public function intuit()
     {
-        return $this->get('default');
+        $name = 'default';
+
+        $extensions = array(
+            'meta',
+            'context'
+        );
+
+        foreach ($extensions as $key => $extension) {
+            $method = "intuitBy" . ucfirst($extension);
+            $found = $this->$method();
+
+            if(!is_null($found)) {
+                return $found;
+            }
+        }
+
+        return $name;
+    }
+
+    public function intuitByContext()
+    {
+        $view = null;
+
+        $contexts = array(
+            'is_front_page' => 'front',
+            'is_home' => 'home',
+            'is_page' => 'page',
+            'is_single' => 'single',
+            'is_category' => 'category',
+            'is_tag' => 'tag',
+            'is_taxonomy' => 'taxonomy',
+            'is_archive' => 'archive',
+            'is_404' => '404'
+        );
+
+        foreach ($contexts as $key => $context) {
+            if($this->wp->$key()) {
+                $view = $this->find($context);
+                if(!is_null($view)) {
+                    return $view;
+                }
+            }
+        }
+
+        return $view;
+    }
+
+    public function intuitByMeta()
+    {
+        $view = null;
+
+        $post = $this->wp->post();
+        $metaValue = $this->wp->get_post_meta($post->ID, 'page', true);
+
+        $view = $this->find("meta-page-$metaValue");
+
+        return $view;
     }
 
     public function get($name)
     {
-        $name = $this->getPossibleViewFile($name);
+        $view = $this->find($name);
 
-        $nameWithNameSpace = "{$this->namespace}::$name";
-
-        if($this->exists($name)) {
-            return $name;
-        } else if($this->exists($nameWithNameSpace)) {
-            return $nameWithNameSpace;
-        } else {
+        if(is_null($view)) {
             throw new \InvalidArgumentException("View [$name] not found.");
         }
+
+        return $view;
     }
 
     public function exists($name)
@@ -56,7 +108,7 @@ class ViewFile
         }
     }
 
-    protected function getPossibleViewFile($name)
+    protected function getViewFile($name)
     {
         $view = $name;
 
@@ -65,5 +117,20 @@ class ViewFile
         }
 
         return $view;
+    }
+
+    protected function find($name)
+    {
+        $name = $this->getViewFile($name);
+
+        $nameWithNameSpace = "{$this->namespace}::$name";
+
+        if($this->exists($name)) {
+            return $name;
+        } else if($this->exists($nameWithNameSpace)) {
+            return $nameWithNameSpace;
+        }
+
+        return null;
     }
 }
