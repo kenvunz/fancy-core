@@ -2,6 +2,7 @@
 
 use Fancy\Core\Support\Wordpress;
 use Illuminate\View\ViewFinderInterface;
+use Fancy\Core\Entity\ViewName;
 
 class ViewFile
 {
@@ -48,6 +49,10 @@ class ViewFile
         return $name;
     }
 
+    /**
+     * Works out a view name base on general Wordpress context
+     * @return ViewName|null
+     */
     public function intuitByContext()
     {
         $view = null;
@@ -55,11 +60,7 @@ class ViewFile
         $contexts = array(
             'is_front_page' => 'front',
             'is_home' => 'home',
-            'is_page' => 'page',
             'is_single' => 'single',
-            'is_category' => 'category',
-            'is_tag' => 'tag',
-            'is_taxonomy' => 'taxonomy',
             'is_archive' => 'archive',
             'is_404' => '404'
         );
@@ -76,6 +77,10 @@ class ViewFile
         return $view;
     }
 
+    /**
+     * Works out a view name if the current post has a meta key name 'page'
+     * @return ViewName|null
+     */
     public function intuitByMeta()
     {
         $view = null;
@@ -88,6 +93,11 @@ class ViewFile
         return $view;
     }
 
+    /**
+     * Trigger the internal find method to find a view given by name
+     * @param  string $name A name to look for view
+     * @return ViewName
+     */
     public function get($name)
     {
         $view = $this->find($name);
@@ -99,6 +109,11 @@ class ViewFile
         return $view;
     }
 
+    /**
+     * Check if a view name is exists using the ViewFileFinder instance
+     * @param  string $name
+     * @return boolean
+     */
     public function exists($name)
     {
         try {
@@ -108,27 +123,33 @@ class ViewFile
         }
     }
 
-    protected function getViewFile($name)
+    /**
+     * Get a view name with directory prefix
+     * @param  string   $name           A name
+     * @param  boolean  $addNamespace   Should add namespace or not
+     * @return ViewName
+     */
+    protected function getViewName($name, $addNamespace = false)
     {
-        $view = $name;
-
-        if(!is_null($this->directory)) {
-            $view = "{$this->directory}.$name";
-        }
-
-        return $view;
+        return new ViewName($name, $addNamespace? FANCY_NAME : null, $this->directory);
     }
 
+    /**
+     * Find a possible view name out of current app view directory
+     * and the package directory
+     * @param  string $name A name to look for view
+     * @return string|null  Found view name or null if not found
+     */
     protected function find($name)
     {
-        $name = $this->getViewFile($name);
+        $viewName = $this->getViewName($name);
 
-        $nameWithNameSpace = "{$this->namespace}::$name";
+        $viewNameWithNamespace = $this->getViewName($name, true);
 
-        if($this->exists($name)) {
-            return $name;
-        } else if($this->exists($nameWithNameSpace)) {
-            return $nameWithNameSpace;
+        if($this->exists($viewName)) {
+            return $viewName;
+        } else if($this->exists($viewNameWithNamespace)) {
+            return $viewNameWithNamespace;
         }
 
         return null;
