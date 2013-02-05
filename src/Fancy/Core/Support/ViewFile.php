@@ -28,17 +28,23 @@ class ViewFile
         return $this;
     }
 
+    public function setExtensions(array $value)
+    {
+        $this->extensions = $value;
+
+        return $this;
+    }
+
+    protected $extensions = array(
+        'meta', 'context'
+    );
+
     public function intuit()
     {
         $name = 'default';
 
-        $extensions = array(
-            'meta',
-            'context'
-        );
-
-        foreach ($extensions as $key => $extension) {
-            $method = "intuitBy" . ucfirst($extension);
+        foreach ($this->extensions as $key => $by) {
+            $method = "intuitBy" . ucfirst($by);
             $found = $this->$method();
 
             if(!is_null($found)) {

@@ -80,10 +80,23 @@ class ViewFileTest extends \TestCase
         $this->assertFalse($viewFile->exists(new ViewName('foo')));
     }
 
+    public function testIntuit()
+    {
+        $finder = $this->app['view.finder'];
+
+        $wordpress = $this->app['fancy.wordpress'];
+
+        $viewFile = new ViewFile($wordpress, $finder);
+
+        // disable the default running stack
+        $viewFile->setExtensions(array());
+
+        $this->assertEquals($viewFile->intuit(), 'fancy::default');
+    }
+
     public function testIntuitByContext()
     {
         $finder = $this->getMock('Illuminate\View\FileViewFinder', array('find'), array(), 'FileViewFinder_' . uniqid(), false);
-
         $finder->expects($this->once())
             ->method('find')
             ->with($this->equalTo('home'))
