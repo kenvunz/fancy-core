@@ -2,6 +2,7 @@
 
 /**
  * Simple wrapper class for calling all wordpress functions, making it easy for unit testing
+ * also adding a few helper functions to normalize the inconsistency in wordpress funtions naming and such
  */
 class Wordpress
 {
@@ -33,9 +34,25 @@ class Wordpress
         }
     }
 
+    /**
+     * Return the current global post object
+     * @return object Current global post object
+     */
     public function post()
     {
         global $post;
         return $post;
+    }
+
+    /**
+     * Works out the current taxonomy regardless it's category
+     * or tag or custom taxonomies
+     * @return object Taxonomy object
+     */
+    public function term()
+    {
+        $term = $this->get_queried_object();
+
+        return $term;
     }
 }

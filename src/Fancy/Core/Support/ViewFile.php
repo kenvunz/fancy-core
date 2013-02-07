@@ -36,7 +36,11 @@ class ViewFile
     }
 
     protected $extensions = array(
-        'meta', 'context'
+        'meta',
+        'taxonomy',
+        'mime',
+        'type',
+        'context'
     );
 
     public function intuit()
@@ -63,6 +67,7 @@ class ViewFile
 
     /**
      * Works out a view name base on general Wordpress context
+     * @format {context}
      * @return ViewName|null
      */
     public function intuitByContext()
@@ -91,6 +96,7 @@ class ViewFile
 
     /**
      * Works out a view name if the current post has a meta key name 'page'
+     * @format meta-page-{meta-value}
      * @return ViewName|null
      */
     public function intuitByMeta()
@@ -103,6 +109,63 @@ class ViewFile
         $view = $this->find("meta-page-$metaValue");
 
         return $view;
+    }
+
+    /**
+     * Works out a view name based on the current taxnomony and its slug
+     * @format tax-{taxonomy} | tax-{taxonomy}-{slug}
+     * @return ViewName|null
+     */
+    public function intuitByTaxonomy()
+    {
+        $view = null;
+
+        if(!$this->wp->is_archive()) {
+            return $view;
+        }
+
+        $taxonomy = $this->wp->term();
+
+        // look for a specific taxomy with slug first
+        $view = $this->find("tax-{$taxonomy->taxonomy}-{$taxonomy->slug}");
+
+        if(is_null($view)) {
+            $view = $this->find("tax-{$taxonomy->taxonomy}");
+        }
+
+        return $view;
+    }
+
+    /**
+     * Works out a view name based on the current post object type
+     * @format type-{post_type}
+     * @return ViewName|null
+     */
+    public function intuitByType()
+    {
+        $view = null;
+
+        $post =  $this->wp->post();
+
+        return $this->find("type-{$post->post_type}");
+    }
+
+    /**
+     * Works out a view name based on the current attachment mime type
+     * @format att-{mime}
+     * @return ViewName|null
+     */
+    public function intuitByMime()
+    {
+        $view = null;
+
+        if(!$this->wp->is_attachment()) {
+            return $view;
+        }
+
+        $post = $this->wp->post();
+
+        return $this->find("mime-{$post->post_mime_type}");
     }
 
     /**
