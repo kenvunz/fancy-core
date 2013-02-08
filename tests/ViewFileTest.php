@@ -62,7 +62,7 @@ class ViewFileTest extends \TestCase
 
         $viewFile = new ViewFile($wordpress, $finder);
 
-        $this->assertTrue($viewFile->exists(new ViewName('foo')));
+        $this->assertTrue($viewFile->exists(new ViewName(array('name'=>'foo'))));
     }
 
     public function testExistsFalse()
@@ -77,7 +77,7 @@ class ViewFileTest extends \TestCase
 
         $viewFile = new ViewFile($wordpress, $finder);
 
-        $this->assertFalse($viewFile->exists(new ViewName('foo')));
+        $this->assertFalse($viewFile->exists(new ViewName(array('name'=>'foo'))));
     }
 
     public function testIntuit()

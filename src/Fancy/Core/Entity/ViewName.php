@@ -1,17 +1,10 @@
 <?php namespace Fancy\Core\Entity;
 
-class ViewName
+class ViewName extends Entity
 {
     public $name;
     public $prefix;
     public $namespace;
-
-    public function __construct($name, $namespace = null, $prefix = null)
-    {
-        $this->name = $name;
-        $this->namespace = $namespace;
-        $this->prefix = $prefix;
-    }
 
     public function __toString()
     {

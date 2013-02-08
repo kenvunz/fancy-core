@@ -206,7 +206,13 @@ class ViewFile
      */
     protected function getViewName($name, $addNamespace = false)
     {
-        return new ViewName($name, $addNamespace? FANCY_NAME : null, $this->directory);
+        $attributes = array(
+            'name' => $name,
+            'namespace' => $addNamespace? FANCY_NAME : null,
+            'prefix' => $this->directory
+        );
+
+        return new ViewName($attributes);
     }
 
     /**
