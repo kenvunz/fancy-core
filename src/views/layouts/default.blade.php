@@ -7,9 +7,13 @@
 	<meta charset="utf-8" >
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title></title>
+
+	<?php wp_head(); ?>
 </head>
 
 <body>
 	@yield('body')
+
+	<?php wp_footer(); ?>
 </body>
 </html>

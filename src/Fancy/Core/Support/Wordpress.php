@@ -55,4 +55,20 @@ class Wordpress
 
         return $term;
     }
+
+    /**
+     * A unified way to add action/filter to wordpress system
+     * @param  string  $tag           The name of the action to which the $function_to_add is hooked.
+     * @param  Closure $function      The name of the function you wish to be called.
+     * @param  int $priority          Used to specify the order in which the functions associated with a particular action are executed (default: 10). Lower numbers correspond with earlier execution, and functions with the same priority are executed in the order in which they were added to the action.
+     * @param  int $accepted_args     The number of arguments the function accept (default 99 aka 'all')
+     */
+    public function on($tag, \Closure $function, $priority = 10, $accepted_args = 99)
+    {
+        $pieces = preg_split('/\s+/', $tag);
+
+        foreach ($pieces as $key => $tag) {
+            static::add_action($tag, $function, $priority, $accepted_args);
+        }
+    }
 }

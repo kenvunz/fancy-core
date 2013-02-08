@@ -3,6 +3,9 @@
 use Fancy\Core\Support\Factory;
 use Fancy\Core\Support\Wordpress;
 use Fancy\Core\Support\ViewFile;
+use Fancy\Core\Support\Asset;
+use Fancy\Core\Facade\Core;
+
 use Illuminate\Support\ServiceProvider;
 
 define ('FANCY_PACKAGE', 'fancy/core');
@@ -25,6 +28,8 @@ class CoreServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package(FANCY_PACKAGE, FANCY_NAME);
+
+        Core::asset()->init();
 	}
 
 	/**
@@ -57,6 +62,15 @@ class CoreServiceProvider extends ServiceProvider {
 
         $this->app["$namespace.layout"] = $this->app->share(function($app) use ($namespace) {
             return $app["$namespace.view-file"]->setDirectory('layouts');
+        });
+
+        $this->app["$namespace.asset"] = $this->app->share(function($app) use ($namespace) {
+
+            $wordpress = $app["$namespace.wordpress"];
+            $config = \Config::get("$namespace::asset");
+
+            $asset = new Asset($wordpress, $config);
+            return $asset;
         });
 	}
 
