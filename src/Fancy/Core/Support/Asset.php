@@ -1,9 +1,5 @@
 <?php namespace Fancy\Core\Support;
 
-use Fancy\Core\Entity\Entity;
-use Fancy\Core\Entity\EnqueueScriptArgument;
-use Fancy\Core\Entity\EnqueueStyleArgument;
-
 class Asset
 {
 
@@ -16,22 +12,31 @@ class Asset
         $this->config = $config;
     }
 
-    public function init()
+    /**
+     * Listen to wp_enqueue_scripts event and attach assets to the Wordpress template
+     */
+    public function initialize()
     {
         $self = $this;
 
-        if(!empty($this->config['scripts'])) {
-            $scripts = $this->config['scripts'];
+        $configs = array('scripts', 'styles');
 
-            $scripts = $this->parseScriptsConfig($scripts);
+        foreach ($configs as $key => $config) {
+            if(!empty($this->config[$config])) {
+                $assets = $this->config[$config];
 
-            $wp = $this->wp;
+                $method = 'parse'.$config.'Config';
 
-            $this->wp->on('wp_enqueue_scripts', function() use ($wp, $scripts) {
-                foreach ($scripts as $key => $script) {
-                    call_user_func_array(array($wp, 'wp_enqueue_script'), $script->toArray());
-                }
-            });
+                $assets = $this->$method($assets);
+
+                $wp = $this->wp;
+
+                $this->wp->on("wp_enqueue_scripts", function() use ($wp, $assets, $config) {
+                    foreach ($assets as $key => $asset) {
+                        call_user_func_array(array($wp, "wp_enqueue_$config"), $asset->toArray());
+                    }
+                });
+            }
         }
     }
 
@@ -58,7 +63,7 @@ class Asset
     /**
      * Parse an array of config elements into Fancy\Core\Entity\EnqueueScriptArgument
      * @param  array  $config   Array of config to be parsed
-     * @param  string $class    Name of class that will be used to create objects
+     * @param  string $class    Name of class that will be used to create argument objects
      */
     protected function parseConfig(array $config = array(), $class)
     {

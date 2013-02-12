@@ -4,9 +4,11 @@ use Fancy\Core\Support\Factory;
 use Fancy\Core\Support\Wordpress;
 use Fancy\Core\Support\ViewFile;
 use Fancy\Core\Support\Asset;
+use Fancy\Core\Support\Custom;
 use Fancy\Core\Facade\Core;
 
 use Illuminate\Support\ServiceProvider;
+use Doctrine\Common\Inflector\Inflector;
 
 define ('FANCY_PACKAGE', 'fancy/core');
 define ('FANCY_NAME', 'fancy');
@@ -29,7 +31,7 @@ class CoreServiceProvider extends ServiceProvider {
 	{
 		$this->package(FANCY_PACKAGE, FANCY_NAME);
 
-        Core::asset()->init();
+        Core::asset()->initialize();
 	}
 
 	/**
@@ -71,6 +73,16 @@ class CoreServiceProvider extends ServiceProvider {
 
             $asset = new Asset($wordpress, $config);
             return $asset;
+        });
+
+        $this->app["$namespace.custom"] = $this->app->share(function($app) use ($namespace) {
+
+            $inflector = new Inflector();
+            $wordpress = $app["$namespace.wordpress"];
+            $config = \Config::get("$namespace::custom");
+
+            $custom = new Custom($inflector, $wordpress, $config);
+            return $custom;
         });
 	}
 

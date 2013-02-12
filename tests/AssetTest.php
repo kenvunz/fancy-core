@@ -66,7 +66,7 @@ class AssetTest extends \TestCase
         $result = $asset->parseScriptsConfig($config['scripts']);
 
         foreach ($result as $key => $value) {
-            $this->assertEquals($value->toArray(), $expected[$key]);
+            $this->assertEquals($expected[$key], $value->toArray());
         }
     }
 
@@ -74,7 +74,14 @@ class AssetTest extends \TestCase
     {
         $config = array(
             'styles' => array(
-                'site'
+                'site',
+
+                'style' => 'css/style.css',
+
+                'admin-style' => array(
+                    'src' => 'http://foo/baz.css',
+                    'in_admin' => true
+                )
             )
         );
 
@@ -86,17 +93,39 @@ class AssetTest extends \TestCase
                 'ver' => false,
                 'media' => 'all',
                 'in_admin' => false
+            ),
+
+            array(
+                'name' => 'style',
+                'src' => 'http://foo/baz/css/style.css',
+                'deps' => array(),
+                'ver' => false,
+                'media' => 'all',
+                'in_admin' => false
+            ),
+
+            array(
+                'name' => 'admin-style',
+                'src' => 'http://foo/baz.css',
+                'deps' => array(),
+                'ver' => false,
+                'media' => 'all',
+                'in_admin' => true
             )
         );
 
-        $wordpress = new Wordpress;
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('get_stylesheet_directory'), array(), 'WordpressMock_' . uniqid(), false);
+
+        $wordpress->expects($this->any())
+            ->method('get_stylesheet_directory')
+            ->will($this->returnValue('http://foo/baz'));
 
         $asset = new Asset($wordpress, $config);
 
         $result = $asset->parseStylesConfig($config['styles']);
 
         foreach ($result as $key => $value) {
-            $this->assertEquals($value->toArray(), $expected[$key]);
+            $this->assertEquals($expected[$key], $value->toArray());
         }
     }
 }

@@ -1,6 +1,69 @@
 {
-    "hash": "3ff68dd4f6c3a0a3ed8b28bf65611536",
+    "hash": "148e0b856e85f12e6f68dc7b6370fa48",
     "packages": [
+        {
+            "name": "doctrine/inflector",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/inflector.git",
+                "reference": "43ddae8c65425b41a1f62940dc0717b65b097ae0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/43ddae8c65425b41a1f62940dc0717b65b097ae0",
+                "reference": "43ddae8c65425b41a1f62940dc0717b65b097ae0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "time": "2013-01-25 05:58:01",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Inflector\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com",
+                    "homepage": "http://www.jwage.com/"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com",
+                    "homepage": "http://www.instaclick.com"
+                },
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "https://github.com/schmittjoh",
+                    "role": "Developer of wrapped JMSSerializerBundle"
+                }
+            ],
+            "description": "Common String Manipulations with regard to casing and singular/plural rules.",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "string",
+                "inflection",
+                "singularize",
+                "pluralize"
+            ]
+        },
         {
             "name": "illuminate/support",
             "version": "dev-master",
@@ -8,18 +71,18 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/illuminate/support",
-                "reference": "9d1e025373d89c2fb1a3db74a8f1881c23e22e34"
+                "reference": "v4.0.0-BETA3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/9d1e025373d89c2fb1a3db74a8f1881c23e22e34",
-                "reference": "9d1e025373d89c2fb1a3db74a8f1881c23e22e34",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/v4.0.0-BETA3",
+                "reference": "v4.0.0-BETA3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2013-01-31 01:47:04",
+            "time": "2013-02-08 15:52:23",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -49,7 +112,7 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "doctrine/inflector": 20
+    }
 }

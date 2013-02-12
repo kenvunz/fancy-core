@@ -71,4 +71,16 @@ class Wordpress
             static::add_action($tag, $function, $priority, $accepted_args);
         }
     }
+
+    public function wp_enqueue_scripts(/* arguments */)
+    {
+        $arguments = func_get_args();
+        return call_user_func_array(array($this, 'wp_enqueue_script'), $arguments);
+    }
+
+    public function wp_enqueue_styles(/* arguments */)
+    {
+        $arguments = func_get_args();
+        return call_user_func_array(array($this, 'wp_enqueue_style'), $arguments);
+    }
 }
