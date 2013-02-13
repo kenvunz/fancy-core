@@ -16,6 +16,9 @@
         "classmap": [
             "src/migrations"
         ],
+        "files": [
+            "src/Fancy/Core/Support/helpers.php"
+        ],
         "psr-0": {
             "Fancy\\Core": "src/"
         }
