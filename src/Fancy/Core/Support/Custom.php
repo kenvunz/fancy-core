@@ -104,6 +104,12 @@ class Custom
 
     protected function parseLabels(array &$args, $context)
     {
+        if(isset($args['name'])) {
+            $args['label'] = $args['name'];
+
+            unset($args['name']);
+        }
+
         if(isset($args['label']) && (!isset($args['labels']['name']) || !isset($args['labels']['singular_name']))) {
             $args['labels']['name'] = $this->inflector->pluralize($args['label']);
             $args['labels']['singular_name'] = $this->inflector->singularize($args['label']);
