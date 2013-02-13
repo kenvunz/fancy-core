@@ -54,6 +54,6 @@ class WpPostTest extends \TestCase
 
         $instance->setWordpress($wordpress);
 
-        $this->assertEquals($instance->get_the('title'), 'foo');
+        $this->assertEquals($instance->getThe('title'), 'foo');
     }
 }

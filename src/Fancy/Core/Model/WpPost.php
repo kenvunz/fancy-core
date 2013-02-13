@@ -87,11 +87,16 @@ class WpPost extends WpModel
         return $this->hasMany('Fancy\Core\Model\WpPostMeta', 'post_id');
     }
 
-    public function get_the($what = 'title')
+    public function getThe($what = 'title')
     {
-        $GLOBALS['_post'] = $GLOBALS['post'];
+        $_post = $GLOBALS['post'];
 
-        $GLOBALS['post'] = (object) $this->getAttributes();
+        if($_post->ID !== $this->ID) {
+            $GLOBALS['_post'] = $_post;
+            $post = (object) $this->getAttributes();
+            self::$wp->setup_postdata($post);
+            $GLOBALS['post'] = $post;
+        }
 
         $method = "the_$what";
 
@@ -100,10 +105,46 @@ class WpPost extends WpModel
 
         $value = ob_get_clean();
 
-        $GLOBALS['post'] = $GLOBALS['_post'];
-
-        unset($GLOBALS['_post']);
+        if(isset($GLOBALS['_post'])) {
+            $GLOBALS['post'] = $GLOBALS['_post'];
+            unset($GLOBALS['_post']);
+        }
 
         return $value;
+    }
+
+    public function getTitleAttribute($value)
+    {
+        return $this->getPostTitleAttribute($value);
+    }
+
+    public function getPostTitleAttribute($value)
+    {
+        return $this->getThe('title');
+    }
+
+    public function getGuidAttribute($value)
+    {
+        return $this->getThe('guid');
+    }
+
+    public function getContentAttribute($value)
+    {
+        return $this->getPostContentAttribute($value);
+    }
+
+    public function getPostContentAttribute($value)
+    {
+        return $this->getThe('content');
+    }
+
+    public function getExcerptAttribute($value)
+    {
+        return $this->getPostExcerptAttribute($value);
+    }
+
+    public function getPostExcerptAttribute($value)
+    {
+        return $this->getThe('excerpt');
     }
 }
