@@ -92,6 +92,10 @@ class CoreServiceProvider extends ServiceProvider {
         });
 
         $this->app["$namespace.wpPost"] = $this->app->share(function($app) use ($namespace) {
+            $wordpress = $app["$namespace.wordpress"];
+
+            WpPost::setWordpress($wordpress);
+
             return WpPost::cast();
         });
 
