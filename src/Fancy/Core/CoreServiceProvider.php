@@ -32,6 +32,7 @@ class CoreServiceProvider extends ServiceProvider {
 		$this->package(FANCY_PACKAGE, FANCY_NAME);
 
         Core::asset()->initialize();
+        Core::custom()->initialize();
 	}
 
 	/**

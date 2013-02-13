@@ -17,8 +17,6 @@ class Asset
      */
     public function initialize()
     {
-        $self = $this;
-
         $configs = array('scripts', 'styles');
 
         foreach ($configs as $key => $config) {
