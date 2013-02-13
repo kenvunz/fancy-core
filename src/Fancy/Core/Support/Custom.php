@@ -93,7 +93,7 @@ class Custom
                 $args = array_merge($args, $value);
             }
 
-            $this->parseLabels($args);
+            $this->parseLabels($args, $key);
 
             $argument = new $class($attributes);
 
