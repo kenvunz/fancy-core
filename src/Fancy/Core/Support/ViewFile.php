@@ -103,7 +103,7 @@ class ViewFile
     {
         $view = null;
 
-        $post = $this->wp->post();
+        $post = $this->wp->the_post();
         $metaValue = $this->wp->get_post_meta($post->ID, 'page', true);
 
         $view = $this->find("meta-page-$metaValue");
@@ -124,7 +124,7 @@ class ViewFile
             return $view;
         }
 
-        $taxonomy = $this->wp->term();
+        $taxonomy = $this->wp->the_term();
 
         // look for a specific taxomy with slug first
         $view = $this->find("tax-{$taxonomy->taxonomy}-{$taxonomy->slug}");
@@ -145,7 +145,7 @@ class ViewFile
     {
         $view = null;
 
-        $post =  $this->wp->post();
+        $post =  $this->wp->the_post();
 
         return $this->find("type-{$post->post_type}");
     }
@@ -163,7 +163,7 @@ class ViewFile
             return $view;
         }
 
-        $post = $this->wp->post();
+        $post = $this->wp->the_post();
 
         return $this->find("mime-{$post->post_mime_type}");
     }

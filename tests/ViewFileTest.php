@@ -126,10 +126,10 @@ class ViewFileTest extends \TestCase
             ->with($this->equalTo('meta-page-home'))
             ->will($this->returnValue('meta-page-home'));
 
-        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('post', 'get_post_meta'), array(), 'WordpressMock_' . uniqid(), false);
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('the_post', 'get_post_meta'), array(), 'WordpressMock_' . uniqid(), false);
 
         $wordpress->expects($this->once())
-            ->method('post')
+            ->method('the_post')
             ->will($this->returnValue(
                 (object) array('ID' => 1)
             ));
@@ -153,14 +153,14 @@ class ViewFileTest extends \TestCase
             ->with($this->equalTo('tax-category-foo'))
             ->will($this->returnValue('tax-category-foo'));
 
-        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('is_archive', 'term'), array(), 'WordpressMock_' . uniqid(), false);
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('is_archive', 'the_term'), array(), 'WordpressMock_' . uniqid(), false);
 
         $wordpress->expects($this->once())
             ->method('is_archive')
             ->will($this->returnValue(true));
 
         $wordpress->expects($this->once())
-            ->method('term')
+            ->method('the_term')
             ->will($this->returnValue(
                 (object) array(
                     'taxonomy' => 'category',
@@ -182,10 +182,10 @@ class ViewFileTest extends \TestCase
             ->with($this->equalTo('type-post'))
             ->will($this->returnValue('type-post'));
 
-        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('post'), array(), 'WordpressMock_' . uniqid(), false);
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('the_post'), array(), 'WordpressMock_' . uniqid(), false);
 
         $wordpress->expects($this->once())
-            ->method('post')
+            ->method('the_post')
             ->will($this->returnValue(
                 (object) array(
                     'post_type' => 'post'
@@ -206,14 +206,14 @@ class ViewFileTest extends \TestCase
             ->with($this->equalTo('mime-pdf'))
             ->will($this->returnValue('mime-pdf'));
 
-        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('is_attachment', 'post'), array(), 'WordpressMock_' . uniqid(), false);
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('is_attachment', 'the_post'), array(), 'WordpressMock_' . uniqid(), false);
 
         $wordpress->expects($this->once())
             ->method('is_attachment')
             ->will($this->returnValue(true));
 
         $wordpress->expects($this->once())
-            ->method('post')
+            ->method('the_post')
             ->will($this->returnValue(
                 (object) array(
                     'post_type' => 'attachment',

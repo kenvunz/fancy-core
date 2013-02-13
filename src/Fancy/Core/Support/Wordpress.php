@@ -38,7 +38,7 @@ class Wordpress
      * Return the current global post object
      * @return object Current global post object
      */
-    public function post()
+    public function the_post()
     {
         global $post;
         return $post;
@@ -49,7 +49,7 @@ class Wordpress
      * or tag or custom taxonomies
      * @return object Taxonomy object
      */
-    public function term()
+    public function the_term()
     {
         $term = $this->get_queried_object();
 
