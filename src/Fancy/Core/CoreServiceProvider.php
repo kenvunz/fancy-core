@@ -9,6 +9,9 @@ use Fancy\Core\Facade\Core;
 
 use Illuminate\Support\ServiceProvider;
 use Doctrine\Common\Inflector\Inflector;
+use Illuminate\View\Compilers\BladeCompiler;
+
+use Fancy\Core\Support\CompilerEngine as CompilerEngine;
 
 define ('FANCY_PACKAGE', 'fancy/core');
 define ('FANCY_NAME', 'fancy');
@@ -86,6 +89,19 @@ class CoreServiceProvider extends ServiceProvider {
 
             $custom = new Custom($inflector, $wordpress, $config);
             return $custom;
+        });
+
+        $app = $this->app;
+
+        $this->app["view"]->addExtension('blade.php', 'blade', function() use ($app){
+            $cache = $app['path'].'/storage/views';
+
+            // The Compiler engine requires an instance of the CompilerInterface, which in
+            // this case will be the Blade compiler, so we'll first create the compiler
+            // instance to pass into the engine so it can compile the views properly.
+            $compiler = new BladeCompiler($app['files'], $cache);
+
+            return new CompilerEngine($compiler, $app['files']);
         });
 	}
 
