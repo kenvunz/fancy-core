@@ -6,6 +6,7 @@ use Fancy\Core\Support\ViewFile;
 use Fancy\Core\Support\Asset;
 use Fancy\Core\Support\Custom;
 use Fancy\Core\Facade\Core;
+use Fancy\Core\Model\WpPost;
 
 use Illuminate\Support\ServiceProvider;
 use Doctrine\Common\Inflector\Inflector;
@@ -88,6 +89,10 @@ class CoreServiceProvider extends ServiceProvider {
 
             $custom = new Custom($wordpress, $config);
             return $custom;
+        });
+
+        $this->app["$namespace.wpPost"] = $this->app->share(function($app) use ($namespace) {
+            return WpPost::cast();
         });
 
         $app = $this->app;
