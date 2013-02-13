@@ -2,16 +2,18 @@
 
 abstract class Entity
 {
-    protected static $signature;
+    protected static $signatures = array();
 
     public static function signature()
     {
-        if(static::$signature) {
-            return static::$signature;
-        } else {
+        $className = get_called_class();
+
+        if(empty(self::$signatures[$className])) {
             $instance = new static();
-            return static::$signature = $instance->toArray();
+            self::$signatures[$className] = $instance->toArray();
         }
+
+        return self::$signatures[$className];
     }
 
     public function __construct(array $attributes = array())
