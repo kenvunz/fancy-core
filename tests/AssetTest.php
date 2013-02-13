@@ -55,10 +55,10 @@ class AssetTest extends \TestCase
             )
         );
 
-        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('get_stylesheet_directory'), array(), 'WordpressMock_' . uniqid(), false);
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('get_stylesheet_directory_uri'), array(), 'WordpressMock_' . uniqid(), false);
 
         $wordpress->expects($this->any())
-            ->method('get_stylesheet_directory')
+            ->method('get_stylesheet_directory_uri')
             ->will($this->returnValue('http://foo/baz'));
 
         $asset = new Asset($wordpress, $config);
@@ -114,10 +114,10 @@ class AssetTest extends \TestCase
             )
         );
 
-        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('get_stylesheet_directory'), array(), 'WordpressMock_' . uniqid(), false);
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('get_stylesheet_directory_uri'), array(), 'WordpressMock_' . uniqid(), false);
 
         $wordpress->expects($this->any())
-            ->method('get_stylesheet_directory')
+            ->method('get_stylesheet_directory_uri')
             ->will($this->returnValue('http://foo/baz'));
 
         $asset = new Asset($wordpress, $config);

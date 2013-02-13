@@ -102,6 +102,6 @@ class Asset
             return $src;
         }
 
-        return $this->wp->get_stylesheet_directory() . "/$src";
+        return $this->wp->get_stylesheet_directory_uri() . "/$src";
     }
 }
