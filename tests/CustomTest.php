@@ -4,8 +4,6 @@ use Fancy\Core\Facade\Core;
 use Fancy\Core\Support\Custom;
 use Fancy\Core\Support\Wordpress;
 
-use Doctrine\Common\Inflector\Inflector;
-
 
 class CustomTest extends \TestCase
 {
@@ -108,9 +106,7 @@ class CustomTest extends \TestCase
                 return $value;
             }));
 
-        $inflector = new Inflector();
-
-        $custom = new Custom($inflector, $wordpress, array());
+        $custom = new Custom($wordpress, array());
 
         $result = $custom->parsePostTypeConfig($config['post_type']);
 
@@ -227,9 +223,7 @@ class CustomTest extends \TestCase
                 return $value;
             }));
 
-        $inflector = new Inflector();
-
-        $custom = new Custom($inflector, $wordpress, array());
+        $custom = new Custom($wordpress, array());
 
         $result = $custom->parseTaxonomyConfig($config['taxonomy']);
 

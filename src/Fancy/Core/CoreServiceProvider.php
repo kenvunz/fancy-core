@@ -83,11 +83,10 @@ class CoreServiceProvider extends ServiceProvider {
 
         $this->app["$namespace.custom"] = $this->app->share(function($app) use ($namespace) {
 
-            $inflector = new Inflector();
             $wordpress = $app["$namespace.wordpress"];
             $config = \Config::get("$namespace::custom");
 
-            $custom = new Custom($inflector, $wordpress, $config);
+            $custom = new Custom($wordpress, $config);
             return $custom;
         });
 

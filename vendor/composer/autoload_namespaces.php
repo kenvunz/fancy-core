@@ -8,5 +8,4 @@ $baseDir = dirname($vendorDir);
 return array(
     'Illuminate\\Support' => $vendorDir . '/illuminate/support/',
     'Fancy\\Core' => $baseDir . '/src/',
-    'Doctrine\\Common\\Inflector\\' => $vendorDir . '/doctrine/inflector/lib/',
 );

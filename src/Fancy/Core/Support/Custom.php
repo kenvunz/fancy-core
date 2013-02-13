@@ -6,13 +6,11 @@ class Custom
 {
     protected $wp;
     protected $config;
-    protected $inflector;
 
-    public function __construct(Inflector $inflector, Wordpress $wp, array $config)
+    public function __construct(Wordpress $wp, array $config)
     {
         $this->wp = $wp;
         $this->config = $config;
-        $this->inflector = $inflector;
     }
 
     public function initialize()
@@ -111,17 +109,17 @@ class Custom
         }
 
         if(isset($args['label']) && (!isset($args['labels']['name']) || !isset($args['labels']['singular_name']))) {
-            $args['labels']['name'] = $this->inflector->pluralize($args['label']);
-            $args['labels']['singular_name'] = $this->inflector->singularize($args['label']);
+            $args['labels']['name'] = str_plural($args['label']);
+            $args['labels']['singular_name'] = str_singular($args['label']);
 
              unset($args['label']);
         } else if(isset($args['labels']['name']) && !isset($args['labels']['singular_name'])) {
             $name = $args['labels']['name'];
-            $args['labels']['name'] = $this->inflector->pluralize($name);
-            $args['labels']['singular_name'] = $this->inflector->singularize($name);
+            $args['labels']['name'] = str_plural($name);
+            $args['labels']['singular_name'] = str_singular($name);
 
         } else if(isset($args['labels']['singular_name']) && !isset($args['labels']['name'])) {
-            $args['labels']['name'] = $this->inflector->pluralize($args['labels']['singular_name']);
+            $args['labels']['name'] = str_plural($args['labels']['singular_name']);
         }
 
         $labels = &$args['labels'];
