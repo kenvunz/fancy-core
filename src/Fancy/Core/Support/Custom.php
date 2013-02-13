@@ -56,7 +56,7 @@ class Custom
             if(is_string($value)) {
                 $args['label'] = $value;
             } else if(is_array($value)) {
-                $args = array_merge($args, $value);
+                $args = array_merge_recursive_distinct($args, $value);
             }
 
             $this->parseLabels($args, $key);
@@ -90,7 +90,7 @@ class Custom
                     unset($value['object_type']);
                 }
 
-                $args = array_merge($args, $value);
+                $args = array_merge_recursive_distinct($args, $value);
             }
 
             $this->parseLabels($args, $key);
@@ -137,7 +137,7 @@ class Custom
                 continue;
             }
 
-            $labels[$key] = _x(str_replace(
+            $labels[$key] = $this->wp->_x(str_replace(
                 array('#plural#', '#singular#', '#Plural#', '#Singular#'),
                 array($plural, $singular, $Plural, $Singular), $value),
                 $context);

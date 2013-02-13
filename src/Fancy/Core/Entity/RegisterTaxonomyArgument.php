@@ -18,7 +18,7 @@ class RegisterTaxonomyArgument extends Entity
             'new_item_name' => 'New #Singular# Name',
             'separate_items_with_commas' => 'Separate #plural# with commas',
             'add_or_remove_items' => 'Add or remove #plural#',
-            'choose_from_most_used' => 'Choose from the most used #plural#',
+            'choose_from_most_used' => 'Choose from the most used #plural#'
         ),
         'public' => true
     );
