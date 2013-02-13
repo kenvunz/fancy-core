@@ -1,5 +1,7 @@
 <?php namespace Fancy\Core\Support;
 
+use Fancy\Core\Facade\Core;
+
 /**
  * Simple wrapper class for calling all wordpress functions, making it easy for unit testing
  * also adding a few helper functions to normalize the inconsistency in wordpress funtions naming and such
@@ -38,10 +40,16 @@ class Wordpress
      * Return the current global post object
      * @return object Current global post object
      */
+    protected $the_post;
+
     public function the_post()
     {
         global $post;
-        return $post;
+
+        if(!is_null($this->the_post) && $this->the_post->ID === $post->ID) {
+            return $this->the_post;
+        }
+        return $this->the_post = Core::wpPost((array) $post);
     }
 
     /**

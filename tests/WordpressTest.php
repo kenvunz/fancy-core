@@ -2,6 +2,7 @@
 
 use Fancy\Core\Support\Wordpress;
 use Fancy\Core\Facade\Core;
+use Fancy\Core\Model\WpPost;
 
 class WordpressTest extends \TestCase
 {
@@ -33,5 +34,18 @@ class WordpressTest extends \TestCase
         }
 
         $this->assertEquals($wordpress->foo(), 'baz');
+    }
+
+    public function testThePost()
+    {
+        $GLOBALS['post'] = (object) array('post_type' => 'foo', 'ID' => 1);
+
+        $wordpress = $this->app['fancy.wordpress'];
+
+        $the_post = $wordpress->the_post();
+
+        $this->assertTrue($the_post instanceof WpPost);
+
+        $this->assertEquals($wordpress->the_post(), $the_post);
     }
 }
