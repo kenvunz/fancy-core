@@ -40,11 +40,11 @@ class WpPostTest extends \TestCase
 
     public function testGetThe()
     {
-        $GLOBALS['post'] = (object) array();
+        $GLOBALS['post'] = (object) array('ID' => 1);
 
         $instance = new WpPost();
 
-        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('the_title'));
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('the_title', 'setup_postdata'));
 
         $wordpress->expects($this->once())
             ->method('the_title')
