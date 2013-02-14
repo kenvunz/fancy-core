@@ -1,7 +1,7 @@
 <?php
 
 use Fancy\Core\Facade\Core;
-use Fancy\Core\Support\ViewFile;
+use Fancy\Core\View\ViewFile;
 use Fancy\Core\Support\Wordpress;
 use Fancy\Core\Entity\ViewName;
 

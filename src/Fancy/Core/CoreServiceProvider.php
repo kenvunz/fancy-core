@@ -2,7 +2,7 @@
 
 use Fancy\Core\Support\Factory;
 use Fancy\Core\Support\Wordpress;
-use Fancy\Core\Support\ViewFile;
+use Fancy\Core\View\ViewFile;
 use Fancy\Core\Support\Asset;
 use Fancy\Core\Support\Custom;
 use Fancy\Core\Facade\Core;
@@ -12,7 +12,7 @@ use Illuminate\Support\ServiceProvider;
 use Doctrine\Common\Inflector\Inflector;
 use Illuminate\View\Compilers\BladeCompiler;
 
-use Fancy\Core\Support\CompilerEngine as CompilerEngine;
+use Fancy\Core\View\CompilerEngine as CompilerEngine;
 
 define ('FANCY_PACKAGE', 'fancy/core');
 define ('FANCY_NAME', 'fancy');

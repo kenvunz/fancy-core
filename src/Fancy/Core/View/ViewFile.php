@@ -1,4 +1,4 @@
-<?php namespace Fancy\Core\Support;
+<?php namespace Fancy\Core\View;
 
 use Fancy\Core\Support\Wordpress;
 use Illuminate\View\ViewFinderInterface;

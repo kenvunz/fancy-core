@@ -1,4 +1,4 @@
-<?php namespace Fancy\Core\Support;
+<?php namespace Fancy\Core\View;
 
 class CompilerEngine extends \Illuminate\View\Engines\CompilerEngine
 {
