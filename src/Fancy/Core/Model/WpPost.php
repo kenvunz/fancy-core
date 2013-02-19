@@ -84,11 +84,6 @@ class WpPost extends WpModel
 
     public function setPostType($postType)
     {
-        // avoid overriding postType
-        if(is_null($postType) && (!is_null($this->postType))) {
-            return $this;
-        }
-
         $this->postType = $postType;
         return $this;
     }
