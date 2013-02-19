@@ -53,6 +53,10 @@ class WpPost extends WpModel
 
         $instance = is_null($class)? new static($attributes) : new $class($attributes);
 
+        if(!($instance instanceof static)) {
+            throw new \InvalidArgumentException("Provided $class is not an instance of " . get_class());
+        }
+
         return $instance->setPostType($postType);
     }
 
