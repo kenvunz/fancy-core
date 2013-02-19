@@ -19,12 +19,23 @@ class WpPost extends WpModel
      */
     public static function cast($attributes = 'post', $class = null)
     {
-        if(!is_array($attributes)) {
-            $postType = $attributes;
-            $attributes = array();
-        }  else {
-            $postType = array_get($attributes, 'post_type');
+        if(is_null($attributes)) {
+            $attributes = 'post';
         }
+
+        if(is_string($attributes)) {
+            $attributes = array('post_type' => $attributes);
+        }
+
+        if(!is_array($attributes)) {
+            throw new \InvalidArgumentException(
+                "The \$attributes paramater must be either a string define a 'post_type' " .
+                "or an associated array with a 'post_type' key/value"
+            );
+        }
+
+        // will default to the default Wordpress 'post_type' ie. 'post'
+        $postType = array_get($attributes, 'post_type', 'post');
 
         // make sure provided class existed
         if(!is_null($class) && !class_exists($class)) {
