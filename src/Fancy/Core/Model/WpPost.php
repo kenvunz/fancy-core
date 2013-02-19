@@ -68,18 +68,7 @@ class WpPost extends WpModel
      */
     public function factory($attributes = 'post', $class = null)
     {
-        if(is_null($class) || ($this instanceof $class)) {
-            if(!is_array($attributes)) {
-                $postType = $attributes;
-            } else {
-                $postType = array_get($attributes, 'post_type');
-                $this->fill($attributes);
-            }
-
-            return $this->setPostType($postType);
-        } else {
-            return static::cast($attributes, $class);
-        }
+        return static::cast($attributes, $class);
     }
 
     public function newQuery()
