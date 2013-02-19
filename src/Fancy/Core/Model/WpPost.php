@@ -11,7 +11,13 @@ class WpPost extends WpModel
 
     protected $postType;
 
-    public static function cast($attributes = null, $class = null)
+    /**
+     * Instantiate a new WpPost model filled with provided attributes
+     * @param  string/array $attributes A valid Wordpress 'post_type', or an data array with a 'post_type' key/value
+     * @param  string $class            A name of class to be instanstiated from
+     * @return WpPost
+     */
+    public static function cast($attributes = 'post', $class = null)
     {
         if(!is_array($attributes)) {
             $postType = $attributes;
@@ -39,7 +45,13 @@ class WpPost extends WpModel
         return $instance->setPostType($postType);
     }
 
-    public function factory($attributes = null, $class = null)
+    /**
+     * Triggered by Fancy\Core\Support\Factory when resolving an instance
+     * Pass-thru the argments to WpPost::cast for instance creationg
+     * @see  WpPost::cast
+     * @return WpPost
+     */
+    public function factory($attributes = 'post', $class = null)
     {
         if(is_null($class) || ($this instanceof $class)) {
             if(!is_array($attributes)) {
