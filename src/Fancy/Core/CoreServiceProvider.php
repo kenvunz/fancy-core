@@ -78,6 +78,10 @@ class CoreServiceProvider extends ServiceProvider {
             $wordpress = $app["$namespace.wordpress"];
             $config = \Config::get("$namespace::asset");
 
+            if(is_null($config)) {
+                $config = array();
+            }
+
             $asset = new Asset($wordpress, $config);
             return $asset;
         });
@@ -86,6 +90,10 @@ class CoreServiceProvider extends ServiceProvider {
 
             $wordpress = $app["$namespace.wordpress"];
             $config = \Config::get("$namespace::custom");
+
+            if(is_null($config)) {
+                $config = array();
+            }
 
             $custom = new Custom($wordpress, $config);
             return $custom;
