@@ -12,12 +12,12 @@ class BladeCompiler extends \Illuminate\View\Compilers\BladeCompiler
     }
 
     public function compileLoop($value) {
-        $pattern = '/(?<!\w)(\s*)@(loop)(\s*\(.*\))/';
+        $pattern = '/(?<!\w)(\s*)@(loop)(\s*\(.*\))?/';
 
         $matches = array();
         preg_match($pattern, $value, $matches);
 
-        $arguments = preg_replace('/\s*/', '', $matches[3]);
+        $arguments = !isset($matches[3])? '()' : preg_replace('/\s*/', '', $matches[3]);
 
         $replacement = '$1<?php ';
 
