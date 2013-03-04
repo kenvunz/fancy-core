@@ -1,5 +1,8 @@
 {
     "name": "kenvunz/laravel-theme-core",
+    "license": "proprietary",
+    "description": "dependency for kenvunz/laravel-theme",
+    "version": "dev-master",
     "authors": [
         {
             "name": "Ken",
