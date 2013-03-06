@@ -6,18 +6,14 @@
 <head>
 	<meta charset="utf-8" >
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title><?php
-	/*
-	 * Print the <title> tag based on what is being viewed.
-	 */
-	global $page, $paged;
-
-	// Add the blog name.
-	bloginfo( 'name' );
-
-	wp_title( '&raquo;', true, 'left' );
-
-	?></title>
+	<title>
+		@section('title')
+        <?php
+            bloginfo( 'name' );
+            wp_title( '&raquo;', true, 'left' );
+        ?>
+        @show
+    </title>
 
 	<?php wp_head(); ?>
 </head>
