@@ -77,13 +77,18 @@ class Asset
                     $attributes = array_merge(array('name' => $key), $value);
                 }
 
-                if(is_string($value)) {
+                if(is_string($value) || is_callable($value)) {
                     $attributes = array('name' => $key, 'src' => $value);
                 }
             }
 
             if(!empty($attributes)) {
                 $argument = new $class($attributes);
+
+                if(is_callable($argument->src)) {
+                    $func = $argument->src;
+                    $argument->src = $func($attributes);
+                }
 
                 if($argument->src !== false) {
                     $argument->src = $this->resolveSource($argument->src);

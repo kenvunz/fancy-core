@@ -128,4 +128,42 @@ class AssetTest extends \TestCase
             $this->assertEquals($expected[$key], $value->toArray());
         }
     }
+
+    public function testParseStyleAsClosure()
+    {
+        $config = array(
+            'styles' => array(
+                'site' => function() {
+                    return "foo1";
+                }
+            )
+        );
+
+        $expected = array(
+            array(
+                'name' => 'site',
+                'src' => 'http://foo/baz/foo1',
+                'deps' => array(),
+                'ver' => false,
+                'media' => 'all',
+                'in_admin' => false
+            )
+        );
+
+        $wordpress = $this->getMock('Fancy\Core\Support\Wordpress', array('get_stylesheet_directory_uri'), array(), 'WordpressMock_' . uniqid(), false);
+
+        $wordpress->expects($this->any())
+            ->method('get_stylesheet_directory_uri')
+            ->will($this->returnValue('http://foo/baz'));
+
+        $asset = new Asset($wordpress, $config);
+
+        $result = $asset->parseStylesConfig($config['styles']);
+
+        $this->assertEquals(1, count($result));
+
+        foreach ($result as $key => $value) {
+            $this->assertEquals($expected[$key], $value->toArray());
+        }
+    }
 }
