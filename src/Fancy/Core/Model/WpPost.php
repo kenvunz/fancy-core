@@ -72,9 +72,9 @@ class WpPost extends WpModel
      * @see  WpPost::cast
      * @return WpPost
      */
-    public function factory($attributes = 'post', $class = null)
+    public function factory($attributes = null, $class = null)
     {
-        return static::cast($attributes, $class);
+        return is_null($attributes) && is_null($class) && !is_null($this->ID)? $this : static::cast($attributes, $class);
     }
 
     public function newQuery()
