@@ -40,16 +40,9 @@ class Wordpress
      * Return the current global post object
      * @return object Current global post object
      */
-    protected $the_post;
-
     public function the_post()
     {
-        global $post;
-
-        if(!is_null($this->the_post) && $this->the_post->ID === $post->ID) {
-            return $this->the_post;
-        }
-        return $this->the_post = Core::wpPost((array) $post);
+        return Core::wpPost();
     }
 
     /**
