@@ -17,10 +17,16 @@ class WpPost extends WpModel
      * @param  string $class            A name of class to be instanstiated from
      * @return WpPost
      */
-    public static function cast($attributes = 'post', $class = null)
+    public static function cast($attributes = null, $class = null)
     {
         if(is_null($attributes)) {
-            $attributes = 'post';
+            global $post;
+            if(!is_null($post)) {
+                $attributes = get_object_vars($post);
+            } else {
+                $attributes = 'post';
+            }
+
         }
 
         if(is_string($attributes)) {
