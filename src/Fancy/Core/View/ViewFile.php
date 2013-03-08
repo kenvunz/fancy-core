@@ -57,7 +57,7 @@ class ViewFile
         }
 
         // if name is still the default, we'll perform a final find
-        // so it actually end up in the package default folder
+        // so it actually end up in the correct default file
         if($name === 'default') {
             $found = $this->find($name);
         }
