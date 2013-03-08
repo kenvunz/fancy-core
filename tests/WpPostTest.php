@@ -56,4 +56,54 @@ class WpPostTest extends \TestCase
 
         $this->assertEquals($instance->getThe('title'), 'foo');
     }
+
+    public function testGetFieldSingle()
+    {
+        $meta = array(
+            (object) array(
+                "meta_key" => "foo",
+                "meta_value" => "baz"
+            ),
+
+            (object) array(
+                "meta_key" => "foo",
+                "mata_value" => "baz1"
+            )
+        );
+
+        $instance = new WpPost();
+
+        $instance->meta = $meta;
+
+        $result = $instance->getField('foo');
+
+        $expected = $meta[0]->meta_value;
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testGetField()
+    {
+        $meta = array(
+            (object) array(
+                "meta_key" => "foo",
+                "meta_value" => "baz"
+            ),
+
+            (object) array(
+                "meta_key" => "foo",
+                "meta_value" => "baz1"
+            )
+        );
+
+        $instance = new WpPost();
+
+        $instance->meta = $meta;
+
+        $result = $instance->getField('foo', false);
+
+        $expected = array('baz', 'baz1');
+
+        $this->assertEquals($expected, $result);
+    }
 }

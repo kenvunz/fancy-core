@@ -130,6 +130,23 @@ class WpPost extends WpModel
         return $value;
     }
 
+    public function getField($key, $single = true)
+    {
+        $results = array();
+
+        foreach ($this->meta as $meta) {
+            if($meta->meta_key === $key) {
+                if($single) {
+                    return $meta->meta_value;
+                } else {
+                    $results[] = $meta->meta_value;
+                }
+            }
+        }
+
+        return $single? null : $results;
+    }
+
     public function getTitleAttribute($value)
     {
         return $this->getPostTitleAttribute($value);
