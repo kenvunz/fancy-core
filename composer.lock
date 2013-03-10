@@ -8,12 +8,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "d77757feb3fd0846bf3e44c79be8abb0d6cb0cce"
+                "reference": "dfa68cb87ae5ebf7ebc006ca2d0ff549a5b15f59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/d77757feb3fd0846bf3e44c79be8abb0d6cb0cce",
-                "reference": "d77757feb3fd0846bf3e44c79be8abb0d6cb0cce",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/dfa68cb87ae5ebf7ebc006ca2d0ff549a5b15f59",
+                "reference": "dfa68cb87ae5ebf7ebc006ca2d0ff549a5b15f59",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 }
             ],
             "description": "Various utilities and support functions.",
-            "time": "2013-03-04 21:32:55"
+            "time": "2013-03-09 04:26:45"
         }
     ],
     "packages-dev": [
