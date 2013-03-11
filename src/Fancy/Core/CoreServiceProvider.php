@@ -35,7 +35,7 @@ class CoreServiceProvider extends ServiceProvider {
 	{
 		$this->package(FANCY_PACKAGE, FANCY_NAME);
 
-        if($this->app['env'] !== 'testing') {
+        if(Wordpress::available()) {
             Core::asset()->initialize();
             Core::custom()->initialize();
         }

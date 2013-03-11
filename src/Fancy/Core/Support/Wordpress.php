@@ -8,6 +8,11 @@ use Fancy\Core\Facade\Core;
  */
 class Wordpress
 {
+    public static function available()
+    {
+        return function_exists('query_posts');
+    }
+
     public function __call($method, array $arguments)
     {
         if(function_exists($method)) {
