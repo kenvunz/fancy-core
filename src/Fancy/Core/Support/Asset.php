@@ -17,20 +17,21 @@ class Asset
      */
     public function initialize()
     {
-        $sets = $this->collect();
+        $collection = $this->collect();
 
-        foreach ($sets as $key => $set) {
+        foreach ($collection as $config => $sets) {
             $method = 'parse'.$config.'Config';
 
-            $set = $this->$method($set);
+            foreach ($sets as $set) {
+                $set = $this->$method($set);
+                $wp = $this->wp;
 
-            $wp = $this->wp;
-
-            $this->wp->on("wp_enqueue_scripts", function() use ($wp, $set, $config) {
-                foreach ($set as $key => $value) {
-                    call_user_func_array(array($wp, "wp_enqueue_$config"), $value->toArray());
-                }
-            });
+                $this->wp->on("wp_enqueue_scripts", function() use ($wp, $set, $config) {
+                    foreach ($set as $value) {
+                        call_user_func_array(array($wp, "wp_enqueue_$config"), $value->toArray());
+                    }
+                });
+            }
         }
     }
 
