@@ -17,25 +17,50 @@ class Asset
      */
     public function initialize()
     {
+        $sets = $this->collect();
+
+        foreach ($sets as $key => $set) {
+            $method = 'parse'.$config.'Config';
+
+            $set = $this->$method($set);
+
+            $wp = $this->wp;
+
+            $this->wp->on("wp_enqueue_scripts", function() use ($wp, $set, $config) {
+                foreach ($set as $key => $value) {
+                    call_user_func_array(array($wp, "wp_enqueue_$config"), $value->toArray());
+                }
+            });
+        }
+    }
+
+    public function collect()
+    {
         $configs = array('scripts', 'styles');
 
+        $sets = array();
+
         foreach ($configs as $key => $config) {
+            $set = array();
+
             if(!empty($this->config[$config])) {
-                $assets = $this->config[$config];
+                $set[] = $this->config[$config];
+            }
 
-                $method = 'parse'.$config.'Config';
+            $collected = \Event::fire(FANCY_NAME."::$config.initialize");
 
-                $assets = $this->$method($assets);
+            if(!empty($collected)) {
+                foreach ($collected as $key => $value) {
+                    $set[] = $value;
+                }
+            }
 
-                $wp = $this->wp;
-
-                $this->wp->on("wp_enqueue_scripts", function() use ($wp, $assets, $config) {
-                    foreach ($assets as $key => $asset) {
-                        call_user_func_array(array($wp, "wp_enqueue_$config"), $asset->toArray());
-                    }
-                });
+            if(!empty($set)) {
+                $sets[$config] = $set;
             }
         }
+
+        return $sets;
     }
 
     /**
@@ -45,18 +70,7 @@ class Asset
      */
     public function parseScriptsConfig(array $config = array())
     {
-        $config = $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueScriptArgument');
-
-        $collected = \Event::fire(FANCY_NAME."::scripts.initialize");
-
-        if(!empty($collected)) {
-            foreach ($collected as $key => $value) {
-                $config = array_merge($config, $this->parseConfig($value, 'Fancy\Core\Entity\EnqueueScriptArgument'));
-            }
-
-        }
-
-        return $config;
+        return $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueScriptArgument');
     }
 
     /**
@@ -66,18 +80,7 @@ class Asset
      */
     public function parseStylesConfig(array $config = array())
     {
-        $config = $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueStyleArgument');
-
-        $collected = \Event::fire(FANCY_NAME."::styles.initialize");
-
-        if(!empty($collected)) {
-            foreach ($collected as $key => $value) {
-                $config = array_merge($config, $this->parseConfig($value, 'Fancy\Core\Entity\EnqueueStyleArgument'));
-            }
-
-        }
-
-        return $config;
+        return $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueStyleArgument');
     }
 
     /**
