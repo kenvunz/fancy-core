@@ -31,6 +31,16 @@ class Asset
                         call_user_func_array(array($wp, "wp_enqueue_$config"), $value->toArray());
                     }
                 });
+
+                $this->wp->on("admin_enqueue_scripts", function() use ($wp, $set, $config) {
+                    foreach ($set as $value) {
+                        if(!$value->in_admin) {
+                            continue;
+                        }
+
+                        call_user_func_array(array($wp, "wp_enqueue_$config"), $value->toArray());
+                    }
+                });
             }
         }
     }
