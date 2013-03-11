@@ -45,7 +45,18 @@ class Asset
      */
     public function parseScriptsConfig(array $config = array())
     {
-        return $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueScriptArgument');
+        $config = $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueScriptArgument');
+
+        $collected = \Event::fire(FANCY_NAME."::scripts.initialize");
+
+        if(!empty($collected)) {
+            foreach ($collected as $key => $value) {
+                $config = array_merge($config, $this->parseConfig($value, 'Fancy\Core\Entity\EnqueueScriptArgument'));
+            }
+
+        }
+
+        return $config;
     }
 
     /**
@@ -55,7 +66,18 @@ class Asset
      */
     public function parseStylesConfig(array $config = array())
     {
-        return $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueStyleArgument');
+        $config = $this->parseConfig($config, 'Fancy\Core\Entity\EnqueueStyleArgument');
+
+        $collected = \Event::fire(FANCY_NAME."::styles.initialize");
+
+        if(!empty($collected)) {
+            foreach ($collected as $key => $value) {
+                $config = array_merge($config, $this->parseConfig($value, 'Fancy\Core\Entity\EnqueueStyleArgument'));
+            }
+
+        }
+
+        return $config;
     }
 
     /**
