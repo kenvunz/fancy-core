@@ -65,8 +65,8 @@ class AssetTest extends \TestCase
 
         $result = $asset->parseScriptsConfig($config['scripts']);
 
-        foreach ($result as $key => $value) {
-            $this->assertEquals($expected[$key], $value->toArray());
+        foreach ($expected as $key => $value) {
+            $this->assertEquals($value, $result[$key]->toArray());
         }
     }
 
@@ -124,8 +124,8 @@ class AssetTest extends \TestCase
 
         $result = $asset->parseStylesConfig($config['styles']);
 
-        foreach ($result as $key => $value) {
-            $this->assertEquals($expected[$key], $value->toArray());
+        foreach ($expected as $key => $value) {
+            $this->assertEquals($value, $result[$key]->toArray());
         }
     }
 
