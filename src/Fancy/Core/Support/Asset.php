@@ -51,6 +51,10 @@ class Asset
 
             if(!empty($collected)) {
                 foreach ($collected as $key => $value) {
+                    if(is_null($value)) {
+                        continue;
+                    }
+
                     $set[] = $value;
                 }
             }
